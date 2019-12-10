@@ -25,11 +25,15 @@ def create_tokens(number):
     print("creating tokens function")
     session = create_session()
     session_id = session.session_id
+    print("session ID:", session_id)
     now = datetime.now()
     timestamp = datetime.timestamp(now)
     for _ in range(number):
         token = openTok.generate_token(session_id)
         tokens.append(token)
+    print("token1:", tokens[0])
+    print("token2:", tokens[1])
+    print("token3:", tokens[2])
     util.record_session(api_key, session_id, tokens[0], timestamp)
     return (tokens, session_id)
 
@@ -66,12 +70,12 @@ if __name__ == "__main__":
     app.run("0.0.0.0")
 
 # didn't finish this block
-@app.route("/<active_users>/audio")
-def audio_control(active_user):
-    result = {}
-    for user in active_user:
-        if active_user.index(user) == 1:
-            result[user] = False
-        else:
-            result[user] = True
-    return {"audio": result}
+# @app.route("/<active_users>/audio")
+# def audio_control(active_user):
+#     result = {}
+#     for user in active_user:
+#         if active_user.index(user) == 1:
+#             result[user] = False
+#         else:
+#             result[user] = True
+#     return {"audio": result}
