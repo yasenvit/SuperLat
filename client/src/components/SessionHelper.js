@@ -40,7 +40,7 @@ class SessionHelper extends React.Component {
     render() {
         console.log(this.props.audioSettings)
         console.log("first stream>", this.state.streams)
-        console.log("streams length--->", this.state.streams ? this.state.streams.length : "no streams yet")
+        console.log("stream--->", this.state.streams ? this.state.streams.length : "no streams yet")
 
         let user1 = <div id="screen1"></div>
         let user2 = (<div id="screen2"></div>)
@@ -53,6 +53,12 @@ class SessionHelper extends React.Component {
         let user9 = (<div id="screen9"></div>)
 
         if (this.props.sessionId && this.props.sessionId.length !== 0) {
+            // var temp = JSON.stringify(this.state.streams)
+            //var dict = JSON.parse(temp)
+            //let t = temp['id']
+            //console.log(dict)
+            // console.log(temp)
+            // console.log("streams[0].id======>", this.state.streams ? this.state.streams[0] : "")
             let username = "user1"
             user1 = (<div id="screen1"><Publisher1 session={this.sessionHelper.session} name={username} audioSettings={this.props.audioSettings} /></div>)
             if (this.state.streams && this.state.streams.length > 0) {
@@ -74,6 +80,7 @@ class SessionHelper extends React.Component {
                 user3 = (
                     <div id="screen3">
                         <Subscriber3
+                            audioSettings={this.props.audioSettings}
                             name="user3"
                             id={this.state.streams[1].id}
                             key={this.state.streams[1].id}
@@ -87,6 +94,7 @@ class SessionHelper extends React.Component {
                 user4 = (
                     <div id="screen4">
                         <Subscriber4
+                            audioSettings={this.props.audioSettings}
                             name="user4"
                             id={this.state.streams[2].id}
                             key={this.state.streams[2].id}
@@ -100,6 +108,7 @@ class SessionHelper extends React.Component {
                 user5 = (
                     <div id="screen5">
                         <Subscriber5
+                            audioSettings={this.props.audioSettings}
                             name="user4"
                             id={this.state.streams[3].id}
                             key={this.state.streams[3].id}
@@ -113,6 +122,7 @@ class SessionHelper extends React.Component {
                 user6 = (
                     <div id="screen6">
                         <Subscriber6
+                            audioSettings={this.props.audioSettings}
                             name="user6"
                             id={this.state.streams[4].id}
                             key={this.state.streams[4].id}
@@ -126,6 +136,7 @@ class SessionHelper extends React.Component {
                 user7 = (
                     <div id="screen7">
                         <Subscriber7
+                            audioSettings={this.props.audioSettings}
                             name="user7"
                             id={this.state.streams[5].id}
                             key={this.state.streams[5].id}
@@ -139,6 +150,7 @@ class SessionHelper extends React.Component {
                 user8 = (
                     <div id="screen8">
                         <Subscriber8
+                            audioSettings={this.props.audioSettings}
                             name="user8"
                             id={this.state.streams[6].id}
                             key={this.state.streams[6].id}
@@ -152,6 +164,7 @@ class SessionHelper extends React.Component {
                 user9 = (
                     <div id="screen9">
                         <Subscriber9
+                            audioSettings={this.props.audioSettings}
                             name="user9"
                             id={this.state.streams[7].id}
                             key={this.state.streams[7].id}

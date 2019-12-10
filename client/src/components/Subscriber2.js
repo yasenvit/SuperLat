@@ -9,7 +9,7 @@ class Subscriber2 extends React.Component {
         console.log("PROPS SUBS", this.props.audioSettings)
         this.state = {
             error: null,
-            audio: this.setAudioRemotely(this.props.audioSettings, this.props.name),
+            audio: false,
             video: true,
 
         };
@@ -27,7 +27,7 @@ class Subscriber2 extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("+++++componentDIDupdate++++++++")
+        // console.log("+++++componentDIDupdate++++++++")
         if (this.props.audioSettings !== prevProps.audioSettings) {
             this.setAudioRemotely(this.props.audioSettings, this.props.name)
         }
@@ -35,7 +35,7 @@ class Subscriber2 extends React.Component {
     }
 
     componentDidMount() {
-        console.log("+++++++++componentDIDmount++++++++++")
+        // console.log("+++++++++componentDIDmount++++++++++")
         this.setAudioRemotely(this.props.audioSettings, this.props.name)
     }
 
@@ -53,7 +53,7 @@ class Subscriber2 extends React.Component {
 
     render() {
 
-        console.log("audio==========", this.state.audio)
+        console.log("audio2==========", this.state.audio)
 
         return (
             <Fragment>

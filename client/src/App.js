@@ -10,11 +10,13 @@ class App extends React.Component {
     api_key: "",
     session_id: "",
     token: "",
-    idsList: ""
+    idsList: "",
+    currentAudio: { "user1": true, "user2": false, "user3": false }
   }
 
 
-  get_audioSettings() {
+
+  get_credentials() {
     // api call to flask server to get session credentials from db
     const endpoint = `/db/sessions/current`
     const promise = apiCall(endpoint, 'get')
@@ -36,7 +38,48 @@ class App extends React.Component {
   // }
   render() {
     let output = (<div className="videobox"></div>)
-    let audioSettings = { "user1": false, "user2": true, "user3": false }
+
+    let audioData = [{ "user1": true, "user2": false, "user3": false },
+    { "user1": false, "user2": true, "user3": false },
+    { "user1": false, "user2": false, "user3": true },
+    { "user1": true, "user2": false, "user3": false }]
+
+    //   changeSpeaker() {
+
+    // // If the count down is finished, write some text
+    //   if (distance < 0) {
+    //   clearInterval(x);
+    //   document.getElementById("countdown").innerHTML = "EXPIRED";
+    // }
+    //   }
+
+    const countDown = () => {
+
+      var countDownDate = new Date("Dec 10, 2019 15:35:00").getTime()
+
+      var x = setInterval(function () {
+        var now = new Date().getTime();
+        // time between now and timer expiration time
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("countdown").innerHTML = "EXPIRED";
+        }
+
+      }, 1000)
+
+    }
+
+    let audioSettings = { "user1": true, "user2": false, "user3": true }
 
     if (this.state.api_key && this.state.api_key.length !== 0) {
       output = (<div className="videobox">
@@ -45,13 +88,16 @@ class App extends React.Component {
     }
 
     return (<div>
+      <div id='countdown'>
+
+      </div>
       {output}
     </div>
 
     );
   }
   componentDidMount() {
-    this.get_audioSettings()
+    this.get_credentials()
   }
 }
 export default App;

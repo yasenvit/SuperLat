@@ -12,7 +12,7 @@ class Publisher1 extends React.Component {
         console.log("PROPS PUBLISHER", this.props.audioSettings)
         this.state = {
             error: null,
-            audio: true,
+            audio: false,
             video: true,
             videoSource: 'camera'
         };
@@ -30,7 +30,7 @@ class Publisher1 extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("+++++componentDIDupdate++++++++")
+        // console.log("+++++componentDIDupdate++++++++")
         if (this.props.audioSettings !== prevProps.audioSettings) {
             this.setAudioRemotely(this.props.audioSettings, this.props.name)
         }
@@ -38,7 +38,7 @@ class Publisher1 extends React.Component {
     }
 
     componentDidMount() {
-        console.log("+++++++++componentDIDmount++++++++++")
+        // console.log("+++++++++componentDIDmount++++++++++")
         this.setAudioRemotely(this.props.audioSettings, this.props.name)
     }
 
@@ -60,7 +60,7 @@ class Publisher1 extends React.Component {
     render() {
 
         // console.log("publisher NAME", this.props.name)
-        console.log("audio==========", this.state.audio)
+        console.log("audio Publisher==========", this.state.audio)
         // console.log("audioSettings+++", this.props.audioSettings)
         // console.log("publisher components--session->", this.props.session.connections)
         return (

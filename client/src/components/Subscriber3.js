@@ -9,7 +9,7 @@ class Subscriber3 extends React.Component {
 
         this.state = {
             error: null,
-            audio: this.setAudioRemotely(this.props.audioSettings, this.props.name),
+            audio: false,
             video: true,
 
         };
@@ -51,9 +51,9 @@ class Subscriber3 extends React.Component {
     }
 
     render() {
-        console.log("subscriber3 NAME----", this.props.name)
-        console.log("audio==========", this.state.audio)
-        console.log("audioSettings++++", this.props.audioSettings)
+        // console.log("subscriber3 NAME----", this.props.name)
+        console.log("audio3==========", this.state.audio)
+        // console.log("audioSettings++++", this.props.audioSettings)
         return (
             <Fragment>
                 <div> subscriber3-- {this.props.name}</div>
