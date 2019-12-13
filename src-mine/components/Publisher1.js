@@ -9,7 +9,7 @@ import CheckBox from './CheckBox';
 class Publisher1 extends React.Component {
     constructor(props) {
         super(props);
-
+        console.log("PROPS PUBLISHER", this.props.audioSettings)
         this.state = {
             error: null,
             audio: false,
@@ -65,8 +65,8 @@ class Publisher1 extends React.Component {
         // console.log("publisher components--session->", this.props.session.connections)
         return (
             <Fragment>
-                {/* <div> publisher-- {this.props.name}</div>
-                {this.state.error ? <div id="error">{this.state.error}</div> : null} */}
+                <div> publisher-- {this.props.name}</div>
+                {this.state.error ? <div id="error">{this.state.error}</div> : null}
                 <OTPublisher
                     session={this.props.session}
 
@@ -78,7 +78,7 @@ class Publisher1 extends React.Component {
                     onError={this.onError}
                 />
 
-                {/* <CheckBox
+                <CheckBox
                     label="Share Screen"
                     onChange={this.changeVideoSource}
                 />
@@ -91,7 +91,7 @@ class Publisher1 extends React.Component {
                     label="Publish Video"
                     initialChecked={this.state.video}
                     onChange={this.setVideo}
-                /> */}
+                />
 
             </Fragment>)
     };

@@ -1,20 +1,17 @@
 import React, { Fragment } from 'react';
-import { OTPublisher } from 'opentok-react';
+import { OTSubscriber } from 'opentok-react';
 import CheckBox from './CheckBox';
 
-// OT_8d35aca7-021a-43d8-8090-9daa904303b0
-//OT_6e08b874-461b-4c09-9bd6-4de7b78699ad
 
-
-class Publisher1 extends React.Component {
+class Subscriber2 extends React.Component {
     constructor(props) {
         super(props);
-
+        console.log("PROPS SUBS", this.props.audioSettings)
         this.state = {
             error: null,
             audio: false,
             video: true,
-            videoSource: 'camera'
+
         };
     }
 
@@ -49,51 +46,44 @@ class Publisher1 extends React.Component {
     setVideo = (video) => {
         this.setState({ video });
     }
-    changeVideoSource = (videoSource) => {
-        (this.state.videoSource !== 'camera') ? this.setState({ videoSource: 'camera' }) : this.setState({ videoSource: 'screen' })
-    }
 
     onError = (err) => {
-        this.setState({ error: `Failed to publish: ${err.message}` });
+        this.setState({ error: `Failed to subscribe: ${err.message}` });
     }
 
     render() {
 
-        // console.log("publisher NAME", this.props.name)
-        console.log("audio Publisher==========", this.state.audio)
-        // console.log("audioSettings+++", this.props.audioSettings)
-        // console.log("publisher components--session->", this.props.session.connections)
+        console.log("audio2==========", this.state.audio)
+
         return (
             <Fragment>
-                {/* <div> publisher-- {this.props.name}</div>
-                {this.state.error ? <div id="error">{this.state.error}</div> : null} */}
-                <OTPublisher
+                <div> subscriber2-- {this.props.name}</div>
+                {this.state.error ? <div id="error">{this.state.error}</div> : null}
+                <OTSubscriber
+                    key={this.props.key}
                     session={this.props.session}
-
+                    stream={this.props.stream}
                     properties={{
-                        publishAudio: this.state.audio,
-                        publishVideo: this.state.video,
-                        videoSource: this.state.videoSource === 'screen' ? 'screen' : undefined
+                        resolution: '170x270',
+                        subscribeToAudio: this.state.audio,
+                        subscribeToVideo: this.state.video
                     }}
                     onError={this.onError}
                 />
 
-                {/* <CheckBox
-                    label="Share Screen"
-                    onChange={this.changeVideoSource}
-                />
                 <CheckBox
-                    label="Publish Audio"
+                    label="Subscribe to Audio"
                     initialChecked={this.state.audio}
                     onChange={this.setAudio}
                 />
                 <CheckBox
-                    label="Publish Video"
+                    label="Subscribe to Video"
                     initialChecked={this.state.video}
                     onChange={this.setVideo}
-                /> */}
+                />
 
-            </Fragment>)
-    };
+            </Fragment>
+        );
+    }
 }
-export default Publisher1;
+export default Subscriber2;

@@ -13,6 +13,8 @@ import Subscriber9 from './Subscriber9';
 
 import '../App.css';
 
+
+
 class SessionHelper extends React.Component {
     constructor(props) {
         super(props);
@@ -20,7 +22,8 @@ class SessionHelper extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-
+        // console.log("SESSION_ID==>", this.props.sessionId)
+        // console.log("TOKEN==>", this.props.token)
         this.sessionHelper = createSession({
             apiKey: this.props.apiKey,
             sessionId: this.props.sessionId,
@@ -32,7 +35,12 @@ class SessionHelper extends React.Component {
     componentWillUnmount() {
         this.sessionHelper.disconnect();
     }
+
+
     render() {
+        console.log(this.props.audioSettings)
+        console.log("first stream>", this.state.streams)
+        console.log("stream--->", this.state.streams ? this.state.streams.length : "no streams yet")
 
         let user1 = <div id="screen1"></div>
         let user2 = (<div id="screen2"></div>)
@@ -45,7 +53,12 @@ class SessionHelper extends React.Component {
         let user9 = (<div id="screen9"></div>)
 
         if (this.props.sessionId && this.props.sessionId.length !== 0) {
-
+            // var temp = JSON.stringify(this.state.streams)
+            //var dict = JSON.parse(temp)
+            //let t = temp['id']
+            //console.log(dict)
+            // console.log(temp)
+            // console.log("streams[0].id======>", this.state.streams ? this.state.streams[0] : "")
             let username = "user1"
             user1 = (<div id="screen1"><Publisher1 session={this.sessionHelper.session} name={username} audioSettings={this.props.audioSettings} /></div>)
             if (this.state.streams && this.state.streams.length > 0) {

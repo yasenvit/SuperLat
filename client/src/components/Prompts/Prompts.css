@@ -1,0 +1,22 @@
+.prompt_content{
+    flex-basis: 80%;
+    
+}
+.countdown{
+    margin: auto auto;
+    text-align: center;
+
+}
+
+.countdown button{
+     background: cornflowerblue;
+     border: none;
+     padding: 10px;
+     cursor: pointer;
+
+}
+.countdown .countdown_set{
+    margin: 10px 0;
+
+}
+

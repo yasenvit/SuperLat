@@ -1,5 +1,5 @@
-const api_url = 'http://127.0.0.1:5000'
-// const api_url = 'https://23001518.ngrok.io'
+// const api_url = 'http://127.0.0.1:5000'
+const api_url = 'https://1bd44958.ngrok.io'
 function apiCall(endpoint, method = 'get', data = null) {
     const url = api_url + endpoint
     if (method === 'get') {

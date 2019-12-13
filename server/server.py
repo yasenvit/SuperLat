@@ -61,21 +61,54 @@ def rooms(session_id, token):
 
 @app.route("/db/sessions/current")
 def get_current_session():
+    logic = [
+        {
+            "session_id": "1_MX40NTgyODA2Mn5-MTU3NTkyODkxODk3MH4wQ2tPT3pCWng0ZFVhZnplTzBLL0s3cFR-UH4",
+            "start_time": "12:00:00",
+            "duration": "00:00:10",
+            "speaker": "1",
+            "prompt": "introduce yourself",
+            "feedback": '{ "question":"how many times did the speaker say "umm"?", "a":"0 times", "b":"once or twice", "c":"2 - 5 times", "d":"more than 5 times" }',
+        },
+        {
+            "session_id": "1_MX40NTgyODA2Mn5-MTU3NTkyODkxODk3MH4wQ2tPT3pCWng0ZFVhZnplTzBLL0s3cFR-UH4",
+            "start_time": "12:00:05",
+            "duration": "00:00:10",
+            "speaker": "1",
+            "prompt": "global warming",
+            "feedback": '{ "question":"how many times did the speaker say "umm"?", "a":"0 times", "b":"once or twice", "c":"2 - 5 times", "d":"more than 5 times" }',
+        },
+        {
+            "session_id": "1_MX40NTgyODA2Mn5-MTU3NTkyODkxODk3MH4wQ2tPT3pCWng0ZFVhZnplTzBLL0s3cFR-UH4",
+            "start_time": "12:00:10",
+            "duration": "00:00:10",
+            "speaker": "1",
+            "prompt": "fake news",
+            "feedback": '{ "question":"how many times did the speaker say "umm"?", "a":"0 times", "b":"once or twice", "c":"2 - 5 times", "d":"more than 5 times" }',
+        },
+        {
+            "session_id": "1_MX40NTgyODA2Mn5-MTU3NTkyODkxODk3MH4wQ2tPT3pCWng0ZFVhZnplTzBLL0s3cFR-UH4",
+            "start_time": "12:00:10",
+            "duration": "00:00:10",
+            "speaker": "1",
+            "prompt": "fake news",
+            "feedback": '{ "question":"how many times did the speaker say "umm"?", "a":"0 times", "b":"once or twice", "c":"2 - 5 times", "d":"more than 5 times" }',
+        },
+        {
+            "session_id": "1_MX40NTgyODA2Mn5-MTU3NTkyODkxODk3MH4wQ2tPT3pCWng0ZFVhZnplTzBLL0s3cFR-UH4",
+            "start_time": "12:00:10",
+            "duration": "00:00:10",
+            "speaker": "1",
+            "prompt": "latest news",
+            "feedback": '{ "question":"how many times did the speaker say "umm"?", "a":"0 times", "b":"once or twice", "c":"2 - 5 times", "d":"more than 5 times" }',
+        }
+    ]
     result = util.get_session_creds()
-    return {"creds": result}
+    # result["logic"] = logic
+    # print("\n\n", result, "\n\n")
+    return jsonify({"creds": result, "logic": logic})
 
 
 if __name__ == "__main__":
     app.debug = True
     app.run("0.0.0.0")
-
-# didn't finish this block
-# @app.route("/<active_users>/audio")
-# def audio_control(active_user):
-#     result = {}
-#     for user in active_user:
-#         if active_user.index(user) == 1:
-#             result[user] = False
-#         else:
-#             result[user] = True
-#     return {"audio": result}

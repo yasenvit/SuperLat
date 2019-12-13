@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css';
 import SessionHelper from './components/SessionHelper';
 import apiCall from './util/apiCall';
-
+import Prompts from './components/Prompts/Prompts';
+import Feedbacks from './components/Feedbacks/Feedbacks'
+import Messages from './components/Messages/Messages'
 class App extends React.Component {
 
   state = {
@@ -10,11 +12,10 @@ class App extends React.Component {
     api_key: "",
     session_id: "",
     token: "",
-    idsList: "",
-    currentAudio: { "user1": true, "user2": false, "user3": false }
+    logic: [],
+    prompt: "",
+    feedback: ""
   }
-
-
 
   get_credentials() {
     // api call to flask server to get session credentials from db
@@ -25,79 +26,110 @@ class App extends React.Component {
       this.setState({
         api_key: json.creds.api_key,
         session_id: json.creds.session_id,
-        token: json.creds.token
+        token: json.creds.token,
+        logic: json.logic
       })
     })
   }
 
-  // componentDidMount() {
-  //     this.interval = setInterval(() => this.get_audio_settings(this.props.session, this.props.key), 1000);
-  // }
-  // componentWillUnmount() {
-  //     clearInterval(this.interval);
-  // }
-  render() {
-    let output = (<div className="videobox"></div>)
+  sendToState = (dur, prompt, feedback) => {
+    this.setState({
+      duration: dur,
+      prompt: prompt,
+      feedback: feedback
+    })
+  }
 
-    let audioData = [{ "user1": true, "user2": false, "user3": false },
-    { "user1": false, "user2": true, "user3": false },
-    { "user1": false, "user2": false, "user3": true },
-    { "user1": true, "user2": false, "user3": false }]
+  getMessages = (array) => {
+    // this function  parse list of rows from meeting data and for each row sets state
+    if (array && array.length > 0) {
 
-    //   changeSpeaker() {
+      let duration = Date.parse('1970-01-01T' + array[0]["duration"] + 'Z');
+      this.setState({
+        duration: duration / 1000, //in seconds
+        prompt: array[0]['prompt'],
+        feedback: array[0]['feedback']
+      });
+      for (let i = 0; i < array.length; i++) {
 
-    // // If the count down is finished, write some text
-    //   if (distance < 0) {
-    //   clearInterval(x);
-    //   document.getElementById("countdown").innerHTML = "EXPIRED";
-    // }
-    //   }
+        ((index) => {
+          setTimeout(() => {
+            console.log("timeout index--", index);
+            let duration = Date.parse('1970-01-01T' + array[0]["duration"] + 'Z');
 
-    const countDown = () => {
+            this.sendToState(duration, array[index]['prompt'], array[index]['feedback'])
 
-      var countDownDate = new Date("Dec 10, 2019 15:35:00").getTime()
-
-      var x = setInterval(function () {
-        var now = new Date().getTime();
-        // time between now and timer expiration time
-        var distance = countDownDate - now;
-
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result in the element with id="demo"
-        document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-        if (distance < 0) {
-          clearInterval(x);
-          document.getElementById("countdown").innerHTML = "EXPIRED";
-        }
-
-      }, 1000)
-
+          }, i * 3000);
+        })(i);
+      }
     }
+  }
 
+  componentDidUpdate() {
+    if (!this.state.prompt) {
+      this.getMessages(this.state.logic)
+    }
+  }
+  render() {
+    console.log("PROMPTS-->>", this.state.prompt)
     let audioSettings = { "user1": true, "user2": false, "user3": true }
+    let output = (<div></div>)
+    if (this.state.api_key) {
+      output = (<div>
+        <SessionHelper
+          apiKey={this.state.api_key}
+          sessionId={this.state.session_id}
+          token={this.state.token}
+          audioSettings={audioSettings}
 
-    if (this.state.api_key && this.state.api_key.length !== 0) {
-      output = (<div className="videobox">
-        <SessionHelper apiKey={this.state.api_key} sessionId={this.state.session_id} token={this.state.token} audioSettings={audioSettings} />
+        />
       </div>)
     }
 
-    return (<div>
-      <div id='countdown'>
+    // let duration
+    // let prompt
+    // let feedback
+    // // this function  parse list of rows from meeting data and for each row sets state
+    // if (this.state.logic && this.state.logic.length > 0) {
 
-      </div>
-      {output}
+    //   duration = Date.parse('1970-01-01T' + this.state.logic[0]["duration"] + 'Z');
+    //   prompt = <Prompts prompt={this.state.logic[0]['prompt']} />;
+    //   feedback = <Feedbacks feedback={this.state.logic[0]['feedback']} />
+
+    //   for (let i = 0; i < this.state.logic.length; i++) {
+
+    //     (function (index, array) {
+    //       setTimeout(function () {
+    //         console.log("timeout index--", index);
+    //         prompt = <Prompts prompt={array[index]['prompt']} />;
+    //         feedback = <Feedbacks feedback={array[index]['feedback']} />
+
+    //       }, i * 3000);
+    //     })(i, this.state.logic);
+    //   }
+    // }
+    console.log(prompt)
+
+    return (<div className="main" >
+      <section className="Left_section">
+        <div className="meeting_videos">
+          {output}
+        </div>
+        <Prompts prompt={this.state.prompt} />
+      </section>
+      <section className="right_section">
+
+        <Feedbacks feedback={this.state.feedback} />
+        <Messages />
+      </section>
     </div>
 
     );
   }
   componentDidMount() {
     this.get_credentials()
+
+
   }
 }
 export default App;
